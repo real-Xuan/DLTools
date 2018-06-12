@@ -1,3 +1,5 @@
+#http://augmentor.readthedocs.io/en/master/code.html
+
 import Augmentor
 
 path_to_data = "dir"
