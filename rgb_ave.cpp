@@ -1,4 +1,3 @@
-//#include "stdafx.h"  //在VS2017中一些头文件都放在"stdafx.h"文件中
 #include <iostream>  
 #include <opencv2/core/core.hpp>  
 #include <opencv2/highgui/highgui.hpp>  
