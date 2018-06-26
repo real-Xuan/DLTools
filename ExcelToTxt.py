@@ -1,7 +1,7 @@
 import numpy as np
 import xlrd
 
-data= xlrd.open_workbook('D:/Desktop/ExcelToTxt/活体检测采集方案0514部分数据返回/6.xlsx')
+data= xlrd.open_workbook('xlsx dir, Excel文件保存地址')
 sh=data.sheet_by_name("sheet1")
 print(sh.nrows)
 print(sh.ncols)
