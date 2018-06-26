@@ -5,3 +5,5 @@
 4. BinConvert.py - 将图片转换为类似于cifar10数据集的bin文件
 5. gray_world.py - 对图像进行gary world处理
 6. augmentation.py - 数据增广
+7. ExcelToTxt.py - ExceL文件按行读取到Txt文件
+8. Download.py - 下载Txt文件中每个链接中的文件（Txt文件格式为每行一个链接）
