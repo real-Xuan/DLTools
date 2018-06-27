@@ -15,29 +15,6 @@ using namespace cv;
 
 void main()
 {
-	
-	/*
-	string path = "F:/taobao1thDBreal_black/07/real/0207/";
-	struct _finddata_t fileinfo;
-	long ld;
-	if ((ld = _findfirst((path + "\\*").c_str(), &fileinfo)) != -1l)
-	{
-		do{
-			if ((fileinfo.attrib&_A_SUBDIR)){  //如果是文件夹；
-				if (strcmp(fileinfo.name, ".jpg") != 0 && strcmp(fileinfo.name, ".jpg") != 0){  //如果文件名不是.或者,,,则递归获取子文件中的文件；
-					string F_path = path + "/" + fileinfo.name;  //递归子文件夹；
-					cout << F_path << endl;
-				}
-			}
-			else   //如果是文件；
-			{
-				cout << path+"/"+fileinfo.name << endl;
-			}
-		} while (_findnext(ld, &fileinfo) == 0);
-		_findclose(ld);
-	}
-
-	*/
 	vector<Mat> read_images_in_folder(cv::String pattern);
 	string path = "F:/taobao1thDBreal_black/07/real/0207/right/xl_";
 	int k = 243;
