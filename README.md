@@ -7,3 +7,4 @@
 6. augmentation.py - 数据增广
 7. ExcelToTxt.py - ExceL文件按行读取到Txt文件
 8. Download.py - 下载Txt文件中每个链接中的文件（Txt文件格式为每行一个链接）
+9. Face_scan.cpp - 扫描文件及内图片，筛选出正脸图片
