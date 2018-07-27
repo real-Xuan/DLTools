@@ -1,1 +1,2 @@
 dir /b/s/a-d *>list.txt
+dir /ad /b /s *>list.txt
