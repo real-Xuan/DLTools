@@ -11,3 +11,4 @@
 10. Motion_blur.py - 多方位运动模糊模拟Python版本
 11. Motion_blur.cpp - 多防卫运动模糊模拟c++版本
 13. Cut_PIL - 批量照片去除黑边（颜色可）
+14. mov2avi - 将txt中的.mov改成.avi
