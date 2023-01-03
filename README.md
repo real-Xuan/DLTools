@@ -3,6 +3,7 @@
 # TODO
 1. Data Generator
 2. Face Recognition Metrics.
+3. Training Process to Notion/Google Docs/ Tencent Docs.
 
 # Deep Learning Tools
 1. gray.py - 灰度化 + 直方图均衡化 批量处理
