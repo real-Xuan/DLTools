@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 
 
-class ImagePreprocess:
+class ImageBasicPreprocess:
 
     def __init__(self, path):
         self.inputDirectory = None
