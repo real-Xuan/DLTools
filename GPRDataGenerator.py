@@ -1,4 +1,5 @@
 import gprMax
+from abc import abstractmethod
 
 class Generator:
     def __init__(self, model, frequency, amplitude, phase, x, y, z):
@@ -9,10 +10,11 @@ class Generator:
         self.x = x
         self.y = y
         self.z = z
+        self.batchSize = 512
 
-    def configurations(self):
-      return 0
+    @abstractmethod
+    def process(self):
+        pass
 
     def generate(self):
-      return 0
-
+        yield data
