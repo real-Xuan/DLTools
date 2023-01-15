@@ -1,8 +1,10 @@
+# Builder Model
+
 import h5py
 import glob
 from abc import abstractmethod
-
-class Generator:
+from GPRDataBuilder import GPRDataBuilder
+class Generator(GPRDataBuilder):
     def __init__(self, model, frequency, amplitude, phase, x, y, z):
         self.model = model
         self.frequency = frequency
@@ -13,9 +15,17 @@ class Generator:
         self.z = z
         self.batchSize = 512
 
+
+    # def InstanceOfBuilder(GPRDataBuilder):
+
+
+
+
+
+
     def get_output_data(filename, rxnumber, rxcomponent):
 
-        # import from gprMax
+        # <- import from gprMax ->
         # Copyright (C) 2015-2022: The University of Edinburgh
         #                 Authors: Craig Warren and Antonis Giannopoulos
         #
@@ -74,7 +84,7 @@ class Generator:
 
     def merge_files(basefilename, removefiles=False):
 
-        # import from gprMax
+        # <- import from gprMax ->
         # Copyright (C) 2015-2022: The University of Edinburgh
         #                 Authors: Craig Warren and Antonis Giannopoulos
         #
@@ -141,6 +151,7 @@ class Generator:
 
         fout.close()
 
+    # 抽象方法必须被重写！
     @abstractmethod
     def process(self):
         pass
