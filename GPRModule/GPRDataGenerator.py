@@ -3,6 +3,7 @@
 import h5py
 import glob
 from abc import abstractmethod
+from rich import print
 from GPRDataBuilder import GPRDataBuilder
 class Generator(GPRDataBuilder):
     def __init__(self, model, frequency, amplitude, phase, x, y, z):

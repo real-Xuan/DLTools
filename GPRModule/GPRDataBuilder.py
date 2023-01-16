@@ -1,12 +1,27 @@
+# from abc import abstractclassmethod
+from GPRData import GPRData
 
-from abc import abstractclassmethod
-@abstractclassmethod
+
+# @abstractclassmethod
 class GPRDataBuilder:
 
     def __init__(self):
-        self.config = True
+        self.GPRData = GPRData()
+
+    def AScan(self):
+        pass
+
+    def BScan(self):
+        pass
+
+    def CScan(self):
+        pass
+
+    def DScan(self):
+        pass
 
 
+class ConstructBuilder(GPRDataBuilder):
     def AScan(self):
         pass
 
