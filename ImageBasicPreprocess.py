@@ -74,3 +74,6 @@ class ImageBasicPreprocess:
         out = np.array(list(label) + list(r) + list(g) + list(b), np.uint8)
         print(out)
         out.tofile("D:/Desktop/WriteData/test/out.bin")
+
+    def imageToCSV(self, csv_file_name):
+        np.savetxt(csv_file_name, self.image, delimiter=",", fmt="%d")
