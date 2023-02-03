@@ -1,12 +1,18 @@
-# Builder Mode
+# Builder Model
 
 from GPRDataBuilder import GPRDataBuilder
+from NormalGPRDataBuilder import NormalGPRDataBuilder
+
+
 class Director:
 
     def __init__(self):
-        self.builder = GPRDataBuilder
+        self.builder = NormalGPRDataBuilder
 
-    def setConfiguration(self):
-        pass
-        #builder.AScsan()
-        # TODO
+    def runSimulator(self):
+        self.builder.AScan()
+
+
+if __name__ == "__main__":
+    director = Director()
+    director.runSimulator()

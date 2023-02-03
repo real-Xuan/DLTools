@@ -23,6 +23,7 @@ import os
 import psutil
 import sys
 
+# TODO: 按照官方文档安装了gprMax库，后期要考虑简化此流程
 from colorama import init
 from colorama import Fore
 from colorama import Style
@@ -30,6 +31,7 @@ init()
 import numpy as np
 from terminaltables import AsciiTable
 from tqdm import tqdm
+from rich import print
 
 from gprMax.constants import floattype
 from gprMax.constants import complextype
@@ -132,6 +134,7 @@ def run_model(args, currentmodelrun, modelend, numbermodelruns, inputfile, usern
 
         # Read input file and process any Python and include file commands
         processedlines = process_python_include_code(inputfile, usernamespace)
+        print(processedlines)
 
         # Print constants/variables in user-accessable namespace
         uservars = ''
