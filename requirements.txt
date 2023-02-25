@@ -1,0 +1,14 @@
+python==3.6
+colorama
+cython
+h5py
+jupyter
+matplotlib
+numpy
+pip
+psutil
+scipy
+terminaltables
+tqdm
+
+rich
