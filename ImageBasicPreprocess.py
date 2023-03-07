@@ -75,5 +75,9 @@ class ImageBasicPreprocess:
         print(out)
         out.tofile("D:/Desktop/WriteData/test/out.bin")
 
+
+    def imageBinarization(self, threshold):
+        self.image = cv2.threshold(self.image, threshold, 255, cv2.THRESH_BINARY)
+
     def imageToCSV(self, csv_file_name):
         np.savetxt(csv_file_name, self.image, delimiter=",", fmt="%d")
