@@ -1,20 +1,12 @@
-import h5py
+import os
 import numpy as np
 import cv2
 
 def imageBinarization():
+# TODO: More general way to do this
     image = cv2.imread('/Users/Xuan/Developer/DLTools/images/root.jpg', 0)
     cv2.threshold(image, 200, 255, cv2.THRESH_BINARY, image)
     cv2.imwrite('/Users/Xuan/Developer/DLTools/images/root_binary.jpg', image)
 
-#return [0,1) random 3d array
-def random3dArray():
-    return np.random.random_sample(size=(64, 64, 64))
-
-#write HDF5 file
-# f = h5py.File('my_object.h5','w')
-# dx_dy_dz = (0.005, 0.005, 0.005)
-# data = cone()
-# data = np.array(data,dtype=np.float16)
-# f.attrs['dx_dy_dz'] = dx_dy_dz
-# f['/data'] = data
+def png2Hdf5():
+    os.system('python -m tools.convert_png2h5 root_binary_part.png 0.002 0.002 0.002 -zcells 150')
