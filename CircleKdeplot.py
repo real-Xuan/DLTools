@@ -4,14 +4,12 @@ import seaborn as sns
 
 import numpy as np
 
-cmap = sns.light_palette((20, 60, 50), input="husl")
+cmap = sns.cubehelix_palette(start=0, light=1, as_cmap=True)
 
 fig_kdeplot = plt.figure()
 fig_kdeplot_ax1 = fig_kdeplot.add_subplot(321)
 fig_kdeplot_ax2 = fig_kdeplot.add_subplot(322)
-fig_kdeplot_ax3 = fig_kdeplot.add_subplot(323)
-fig_kdeplot_ax4 = fig_kdeplot.add_subplot(324)
-fig_kdeplot_ax5 = fig_kdeplot.add_subplot(325)
+
 
 def points_on_circle(a, r, step=30):
     # 生成从0到2π，共n个点的角度列表
