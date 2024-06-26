@@ -1,0 +1,168 @@
+import numpy as np
+from scipy.signal import hilbert
+from scipy.fft import fft
+
+
+class gprSignalPreprocessor(object):
+    def __init__(self, gprData, dD='3d'):
+        if dD == '2d':
+            self.volume = np.stack([gprData]*100)
+        elif dD == '3d':
+            self.volume = gprData
+
+    def standardization(self, data):
+        # Implement standardization logic here
+        # Placeholder for actual standardization code
+        standardized_data = (data - np.mean(data)) / np.std(data)
+        return standardized_data
+
+    def normalization(self, data):
+        # Implement normalization logic here
+        # Placeholder for actual normalization code
+        normalized_data = (data - np.min(data)) / (np.max(data) - np.min(data))
+        return normalized_data
+
+    def toIA(self):
+        volumeIA = np.stack([np.abs(hilbert(self.volume[:, i, :]))
+                            for i in range(self.volume.shape[1])])
+        volumeIA = self.standardization(volumeIA)
+        volumeIA = self.normalization(volumeIA)
+        return volumeIA
+
+    def toIP(self):
+        volumeIP = np.stack([np.unwrap(np.angle(hilbert(self.volume[:, i, :])))
+                            for i in range(self.volume.shape[1])])
+        volumeIP = self.standardization(volumeIP)
+        volumeIP = self.normalization(volumeIP)
+        return volumeIP
+
+    def toIF(self):
+        # Todo: fs shoud be a variable.
+        fs=1000
+    #   np.pad is used to pad the result of np.diff to maintain the original shape. The padding is added to the last axis (axis=-1) with one additional element ((0, 1)).
+	#   mode='edge' pads using the edge values, ensuring the continuity of the data.
+        volumeIF = np.stack([
+            np.pad(np.diff(np.unwrap(np.angle(hilbert(self.volume[:, i, :])))) / (2.0 * np.pi) * fs, 
+                   ((0, 0), (0, 1)), 
+                   mode='edge') 
+            for i in range(self.volume.shape[1])
+        ])
+        volumeIF = self.standardization(volumeIF)
+        volumeIF = self.normalization(volumeIF)
+        return volumeIF
+
+    def toEnergy(self):
+        """
+        计算三维数据体的能量属性。
+    
+        参数:
+        data (np.ndarray): 输入的三维数据体，形状为 (6361, 100, 100)
+        window_size (int): 滑动窗口的大小，用于计算能量
+    
+        返回:
+        energy_data (np.ndarray): 能量属性数据体，形状与输入数据相同
+        """
+        window_size = 10
+        energy_data = np.zeros_like(self.volume)
+        half_window = window_size // 2
+
+        # 遍历数据体的每个位置，计算能量属性
+        for i in range(half_window, self.volume.shape[0] - half_window):
+            window = self.volume[i - half_window:i + half_window + 1, :, :]
+            energy_data[i, :, :] = np.sum(window**2, axis=0)
+    
+        return energy_data
+
+    def max_spectral_amplitude(self, sgn):
+        # Calculate the FFT of the signal
+        fft_result = fft(sgn)
+
+        # Calculate the amplitude spectrum
+        amplitude_spectrum = np.abs(fft_result)
+
+        # Find the maximum spectral amplitude
+        # max_spectral_amplitude = np.max(amplitude_spectrum)
+
+        # print("Maximum Spectral Amplitude:", max_spectral_amplitude)
+
+        return self.set_max_to_original_others_to_zero(amplitude_spectrum)
+
+    def set_max_to_original_others_to_zero(self, lst):
+        # Find the maximum value
+        max_value = max(lst)
+        # Set all elements to 0 except the maximum value, which remains unchanged
+        lst = [max_value if x == max_value else 0 for x in lst]
+        return lst
+
+    def toMPA(self):
+        # 获取三维数据体的形状
+        height, width, num_samples = self.volume.shape  # (6361, 100, 100)
+
+        # 初始化一个数组来存储最大振幅谱
+        max_amplitude_spectrum = np.zeros((height, width, num_samples))
+
+        # 对每个 A Scan 信号进行傅里叶变换，并计算最大振幅谱
+        for i in range(height):
+            for j in range(width):
+                signal = self.volume[i, j, :]
+                N = len(signal)
+                yf = fft(signal)
+                amplitude_spectrum = 2.0 / N * np.abs(yf)
+                max_amplitude = np.max(amplitude_spectrum)
+                max_amplitude_spectrum[i, j, :] = max_amplitude
+        
+        # max_amplitude_spectrum = self.standardization(max_amplitude_spectrum)
+        # max_amplitude_spectrum = self.normalization(max_amplitude_spectrum)
+        
+        return max_amplitude_spectrum
+
+    def showVolume(self, volume):
+        
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 1, 1, projection='3d')
+        # 设置坐标轴背景色为白色
+        ax.xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+        ax.yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+        ax.zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+
+        x_min, x_max, x_num = 0, 6360, 6361
+        y_min, y_max, y_num = 0, 99, 100
+        z_min, z_max, z_num = 0, 99, 100
+
+        x = np.linspace(x_min, x_max, x_num)
+        y = np.linspace(y_min, y_max, y_num)
+        z = np.linspace(z_min, z_max, z_num)
+
+        X, Y, Z = np.meshgrid(x, z, y)
+        
+        # Flatten the meshgrid and data volume
+        X_flat = X.ravel()
+        Y_flat = Y.ravel()
+        Z_flat = Z.ravel()
+        
+        # Stack the coordinates for matrix multiplication
+        coords = np.vstack((X_flat, Y_flat, Z_flat))
+
+        # Define rotation matrices
+        R_y = np.array([[0, 0, 1],
+                        [0, 1, 0],
+                        [-1, 0, 0]])
+
+        R_z = np.array([[0, 1, 0],
+                        [-1, 0, 0],
+                        [0, 0, 1]])
+
+        # Apply the rotations
+        coords = R_y @ coords
+        coords = R_z @ coords
+
+        # Unpack the rotated coordinates
+        X_rot, Y_rot, Z_rot = coords
+
+        ax.scatter(X_rot, Y_rot, Z_rot, c=volume, s=1, linewidths=0,
+                cmap=plt.get_cmap('hsv'), alpha=0.3)
+        ax.grid(False)
+        ax.set_xlabel("Time(s)", labelpad=-16)
+        ax.set_ylabel("Distance(m)", labelpad=-16)
+        ax.set_zlabel("Depth(m)", labelpad=-16)
+        plt.show()
