@@ -1,30 +1,105 @@
-# Intruduction
+# Deep Learning Tools (DLTools)
 
-# TODO
-1. GPR Data Generator
-2. Common Data Generator
-3. Face Recognition Metrics.
-4. Training Process to Notion/Google Docs/ Tencent Docs.
-5. TODO: mov1avi - 将txt中的.mov改成.avi - > 通用化文件名处理
+DLTools is a multi-domain preprocessing and postprocessing toolkit for deep learning workflows.
 
-# Deep Learning Tools
-1. ~~gray.py - 灰度化 + 直方图均衡化 批量处理~~
-2. ~~rgb_ave.cpp - 三通道直方图均衡化 批量处理 c++版本~~
-3. BinConvert.py - 将图片转换为类似于cifar10数据集的bin文件
-4. ~~gray_world.py - 对图像进行gary world处理~~
-5. augmentation.py - 数据增广
-6. ExcelToTxt.py - ExceL文件按行读取到Txt文件
-7. Download.py - 下载Txt文件中每个链接中的文件（Txt文件格式为每行一个链接）
-8. ~~Face_scan.cpp - 扫描文件及内图片，筛选出正脸图片~~
-9. Motion_blur.py - 多方位运动模糊模拟Python版本
-10. ~~Motion_blur.cpp - 多方位运动模糊模拟c++版本~~
-11. Cut_PIL - 批量照片去除黑边（颜色可）
+Current implementation focus:
+- CV (computer vision) utilities
+- Radar/Signal (GPR-oriented) utilities
 
-# Installation
+Planned domains:
+- NLP
+- Audio/Speech
+- IoT/TimeSeries
+
+## Project Status
+
+The repository has started a packaging-first refactor.
+
+Implemented in this milestone:
+- `src`-layout Python package scaffold
+- Installable package metadata (`pyproject.toml`)
+- First migrated CV module: motion blur PSF + filtering API
+- First migrated Radar module: DZT read + aligned batch read + save API
+- Minimal tests for CV blur primitives
+
+## Install
+
+Core:
+
+```bash
+pip install -e .
+```
+
+CV extras:
+
+```bash
+pip install -e ".[cv]"
+```
+
+Radar extras:
+
+```bash
+pip install -e ".[radar]"
+```
+
+Development tools:
+
+```bash
+pip install -e ".[dev]"
+```
+
+All extras:
+
+```bash
+pip install -e ".[all]"
+```
+
+## Package Layout
+
+```text
+src/dltools/
+   core/      # pipeline and shared primitives
+   cv/        # computer vision algorithms
+   radar/     # radar/gpr io and signal utilities
+tests/       # test suite
+```
+
+## Quick Start
+
+```python
+import numpy as np
+from dltools.cv import generate_psf
+
+psf, anchor = generate_psf(length=21, angle=15.0)
+print(psf.shape, anchor, np.sum(psf))
+```
+
+```python
+from dltools.radar import read_dzt_files_aligned, save_array
+
+data = read_dzt_files_aligned("/path/to/dzt_dir")
+save_array(data, "aligned.mat", file_type="mat")
+```
+
+## Migration Note
+
+The package is migrating from legacy top-level folders (for example `CV/`, `GPRModule/`) to `src/dltools/*`.
+As agreed in this refactor, legacy import paths are not preserved for compatibility.
+
+## Cleanup Note
+
+Deprecated files that are already replaced by the new package modules were removed to keep the repo simple:
+- removed legacy C++ motion blur implementation
+- removed legacy Python CV motion blur implementation in top-level folder
+- removed legacy DZT alignment script in top-level folder
+- removed obsolete `requirements.txt` (dependency source of truth is now `pyproject.toml`)
+
+Legacy root-level module folders were consolidated under `src/dltools/legacy/`.
+The repository root now keeps only project-level files and non-package assets.
+
 ## Docker
-1. Install and Configure Docker Environment.
-2. Build image. 
-   ```shell
-    docker build -t DLTools
-   ```
+
+```bash
+docker build -t dltools .
+```
 

@@ -1,9 +1,11 @@
-# Introduction
-RUN echo 'Creating DLTools Runing Enviornment...'
+FROM python:3.10-slim
 
-FROM debian:stable-slim
+WORKDIR /app
 
-#
-RUN pip install -r requirements.txt && \
-    python setup.py build && \
-    python setup.py install
+COPY pyproject.toml README.md /app/
+COPY src /app/src
+
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir .
+
+CMD ["python", "-c", "import dltools; print(dltools.__version__)"]
