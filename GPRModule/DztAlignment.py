@@ -11,14 +11,16 @@ def read_dzt_files(dir_path):
         file_path = os.path.join(dir_path, file)
         data = read_dzt_file(file_path)  # Assuming a function to read .dzt files
         data_list.append(data)
-
-    # print(data_list[1][0].shape)
     
     if not data_list:
         raise ValueError("data_list is empty. Ensure the directory contains .dzt files.")
+    
     min_length = min([d[0].shape[1] for d in data_list])
+    # Reshape data to have dimensions: (rows, columns, slices)
     aligned_data = np.array([d[0][:, :min_length] for d in data_list])
-
+    aligned_data = np.transpose(aligned_data, (1, 2, 0))
+    
+    print(f"Final data dimensions (rows, columns, slices): {aligned_data.shape}")
     return aligned_data
 
 def save_data(data, output_path, file_type='mat'):
@@ -34,7 +36,7 @@ def read_dzt_file(file_path):
     return arrs
 
 # Example usage
-dir_path = '/Users/Xuan/Developer/FKMigration/data/ROOTS.PRJ'
-output_path = '/Users/Xuan/Developer/FKMigration/data/ROOTS.PRJ/dzt_data.mat'
+dir_path = '/Users/Xuan/Data/0519下午_东侧树_193-310/dzt/S2N'
+output_path = '/Users/Xuan/Data/0519下午_东侧树_193-310/dzt/E2W/0519下午_东侧树_S2N_dzt.mat'
 aligned_data = read_dzt_files(dir_path)
-save_data(aligned_data, output_path, file_type='mat')
+save_data(aligned_data  output_path, file_type='mat')
