@@ -8,21 +8,28 @@
 
 一个面向深度学习工作流的多领域工具箱，聚焦数据预处理与后处理，覆盖 CV、Radar/GPR、Signal、NLP、Audio、TimeSeries 等常见任务场景。
 
-本 README 参考并遵循 [Best-README-Template](https://github.com/othneildrew/Best-README-Template) 的组织方式，强调可安装性、可测试性、可贡献性与可维护性。
-
 ## 目录
 
-- [关于项目](#关于项目)
-- [功能概览](#功能概览)
-- [项目结构](#项目结构)
-- [快速开始](#快速开始)
-- [使用示例](#使用示例)
-- [开发与质量保障](#开发与质量保障)
-- [Docker](#docker)
-- [路线图](#路线图)
-- [贡献指南](#贡献指南)
-- [许可证](#许可证)
-- [致谢](#致谢)
+- [DLTools](#dltools)
+  - [目录](#目录)
+  - [关于项目](#关于项目)
+  - [功能概览](#功能概览)
+  - [项目结构](#项目结构)
+  - [快速开始](#快速开始)
+    - [环境要求](#环境要求)
+    - [安装（推荐：uv）](#安装推荐uv)
+    - [安装（兼容 pip）](#安装兼容-pip)
+  - [使用示例](#使用示例)
+    - [1) CV: 生成 PSF](#1-cv-生成-psf)
+    - [2) Radar: 批量读取并保存](#2-radar-批量读取并保存)
+    - [3) NLP: 文本预处理与分词](#3-nlp-文本预处理与分词)
+  - [开发与质量保障](#开发与质量保障)
+    - [本地测试](#本地测试)
+    - [代码质量](#代码质量)
+    - [已有测试覆盖](#已有测试覆盖)
+  - [Docker](#docker)
+  - [贡献指南](#贡献指南)
+  - [许可证](#许可证)
 
 ## 关于项目
 
@@ -169,20 +176,8 @@ docker build -t dltools -f dockerfile .
 docker run --rm dltools
 ```
 
-## 路线图
 
-- [x] `src` 布局与基础打包
-- [x] 多领域基础 API 首版迁移（CV/Radar/Signal/NLP/Audio/TimeSeries）
-- [ ] 增加更多端到端示例与基准数据
-- [ ] 完善 CI（测试、Lint、构建与发布流程）
-- [ ] 发布稳定版本并提供变更日志
-
-已将上述待办转换为可执行 Issue 清单模板：
-
-- 通用模板: [`.github/ISSUE_TEMPLATE/roadmap-task.md`](.github/ISSUE_TEMPLATE/roadmap-task.md)
-- 路线图拆解清单: [`.github/ROADMAP_ISSUES_CHECKLIST.md`](.github/ROADMAP_ISSUES_CHECKLIST.md)
-
-使用方式：在 GitHub 新建 Issue 后，复制清单中的对应模板块作为 Issue 描述即可。
+如果你有功能建议，欢迎通过 Issue 提交。
 
 ## 贡献指南
 
@@ -192,17 +187,9 @@ docker run --rm dltools
 2. 保持变更最小且聚焦，补充对应测试。
 3. 在本地通过 `pytest` 和 `ruff check .`。
 4. 发起 Pull Request，清晰描述动机、改动点和验证方式。
-
-建议贡献前先创建 Issue 讨论设计，减少返工。
-
 ## 许可证
 
 本项目在 `pyproject.toml` 中声明为 MIT License。
-
-## 致谢
-
-- README 模板参考: [othneildrew/Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-- 感谢所有贡献者与使用者
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
