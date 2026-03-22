@@ -28,10 +28,24 @@ dependencies = [
 cv = [
   "opencv-python>=4.9",
   "pillow>=10.0",
+  "albumentations>=1.4",
+  "scikit-image>=0.22",
 ]
 radar = [
   "readgssi>=0.0.24",
   "h5py>=3.10",
+]
+nlp = [
+  "nltk>=3.8",
+  "jieba>=0.42",
+]
+audio = [
+  "librosa>=0.10",
+  "soundfile>=0.12",
+]
+timeseries = [
+  "pandas>=2.2",
+  "scikit-learn>=1.4",
 ]
 dev = [
   "pytest>=8.1",
@@ -39,7 +53,7 @@ dev = [
   "ruff>=0.4.0",
 ]
 all = [
-  "dltools[cv,radar,dev]",
+  "dltools[cv,radar,nlp,audio,timeseries,dev]",
 ]
 
 [tool.hatch.build.targets.wheel]
